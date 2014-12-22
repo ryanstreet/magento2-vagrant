@@ -16,6 +16,13 @@ echo "##### INSTALLING APACHE #####"
 echo "#############################"
 sudo apt-get -y install apache2
 
+# Creating folder
+echo "####################################"
+echo "##### CREATING MAGENTO2 FOLDER #####"
+echo "####################################"
+mkdir /var/www/html/magento2
+chmod 0777 -R /var/www/html/magento2
+
 # enable modrewrite
 echo "#######################################"
 echo "##### ENABLING APACHE MOD-REWRITE #####"
@@ -61,41 +68,73 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get -q -y install mysql-server-5.6 mysql-client-5.6
 
 # Create Database instance
-echo "creating database instance"
+echo "#############################"
+echo "##### CREATING DATABASE #####"
+echo "#############################"
 mysql -u root -e "create database magento2;"
 
 # Install PHP 5.5
-echo "installing PHP 5.5.x"
+echo "##########################"
+echo "##### INSTALLING PHP #####"
+echo "##########################"
 apt-get -y install php5
 
 # Install Required PHP extensions
-echo "installing PHP extensions"
+echo "#####################################"
+echo "##### INSTALLING PHP EXTENSIONS #####"
+echo "#####################################"
 apt-get -y install php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd php5-intl php5-common
 
 # Mcrypt issue
-echo "php mcrypt patch"
-# Set PHP Timezone
-echo "setting php timezone"
-# Set PHP Memory Limit
-echo "setting php memory limit"
+echo "#############################"
+echo "##### PHP MYCRYPT PATCH #####"
+echo "#############################"
+sudo ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/apache2/conf.d/20-mcrypt.ini
+sudo ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/20-mcrypt.ini
+sudo service apache2 restart
 
-# Install Composer
-echo "installing composer"
-curl -s http://getcomposer.org/install | php
-mv composer.phar /usr/local/bin/composer
+# Set PHP Timezone
+echo "########################"
+echo "##### PHP TIMEZONE #####"
+echo "########################"
+echo "date.timezone = America/New_York" >> /etc/php5/cli/php.ini
 
 # Install Git
-echo "installing Git"
+echo "##########################"
+echo "##### INSTALLING GIT #####"
+echo "##########################"
+apt-get -y install git
+
 # Clone Magento2 Repository
-echo "cloning Magento2 repository"
-# Set application ownership
-echo "chmod priviledges"
-# Set Application Permissions
-echo "setting file and folder permissions"
+echo "#####################################"
+echo "##### CLONING MAGENTO2 FROM GIT #####"
+echo "#####################################"
+git clone https://github.com/magento/magento2.git /var/www/html/magento2/
+
 # Composer Installation
-echo "installing from composer"
+echo "###############################"
+echo "##### INSTALLING COMPOSER #####"
+echo "###############################"
+curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+
+# Set Ownership and Permissions
+echo "#############################################"
+echo "##### SETTING OWNERSHIP AND PERMISSIONS #####"
+echo "#############################################"
+chown -R www-data /var/www/html/magento2/
+find /var/www/html/magento2/ -type d -exec chmod 700 {} \;
+find /var/www/html/magento2/ -type f -exec chmod 600 {} \;
+
+# Magento 2 Installation from composer
+echo "############################################"
+echo "##### INSTALLING COMPOSER DEPENDENDIES #####"
+echo "############################################"
+cd /var/www/html/magento2/
+composer install
+cd setup/
+composer install
 
 # Restart apache
 echo "restarting Apache"
 sudo service apache2 restart
-
