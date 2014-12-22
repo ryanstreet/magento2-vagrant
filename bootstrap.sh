@@ -132,8 +132,6 @@ echo "##### INSTALLING COMPOSER DEPENDENDIES #####"
 echo "############################################"
 cd /var/www/html/magento2/
 composer install
-cd setup/
-composer install
 
 # Restart apache
 echo "restarting Apache"
