@@ -134,5 +134,7 @@ cd /var/www/html/magento2/
 composer install
 
 # Restart apache
-echo "restarting Apache"
+echo "#############################"
+echo "##### RESTARTING APACHE #####"
+echo "#############################"
 sudo service apache2 restart
