@@ -41,9 +41,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # If you need to forward ports, you can use this command:
   # config.vm.network "forwarded_port", guest: 80, host: 8080
-  
-  ## Post Up Message.  This is the message that is output to the user once the box has been provisioned.
-  config.vm.post_up_message = "Magento2 Vagrant Box ready! 
-Go to http://192.168.33.10/magento2/setup/ to finish installation. 
-If you configured your hosts file, go to http://www.magento2.dev/"
 end
