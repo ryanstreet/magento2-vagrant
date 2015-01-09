@@ -49,7 +49,7 @@ After Vagrant and Virtualbox are setup, run the following commands to install th
 
     Database Username: root
     Database Password: (none)
-    Database Name: magento2
+    Database Name: magento
     URL of Instance: http://192.168.33.10/magento2/
     Host File Configuration: 192.168.33.10 www.magento2.dev magento2.dev
 

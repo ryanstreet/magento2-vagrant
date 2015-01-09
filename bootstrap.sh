@@ -71,7 +71,7 @@ apt-get -q -y install mysql-server-5.6 mysql-client-5.6
 echo "#############################"
 echo "##### CREATING DATABASE #####"
 echo "#############################"
-mysql -u root -e "create database magento2;"
+mysql -u root -e "create database magento;"
 
 # Install PHP 5.5
 echo "##########################"
