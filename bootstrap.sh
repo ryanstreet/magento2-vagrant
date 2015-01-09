@@ -138,3 +138,8 @@ echo "#############################"
 echo "##### RESTARTING APACHE #####"
 echo "#############################"
 sudo service apache2 restart
+
+# Post Up Message
+echo "Magento2 Vagrant Box ready!"
+echo "Go to http://192.168.33.10/magento2/setup/ to finish installation."
+echo "If you configured your hosts file, go to http://www.magento2.dev/setup/"
