@@ -44,5 +44,15 @@ After Vagrant and Virtualbox are setup, run the following commands to install th
 **Run Vagrant Command**
 
     vagrant up
+
+**Other Info**
+
+    Database Username: root
+    Database Password: (none)
+    Database Name: magento2
+    URL of Instance: http://192.168.33.10/magento2/
+    Host File Configuration: 192.168.33.10 www.magento2.dev magento2.dev
+
+
 ## Issue Reporting
 Any and all feedback is welcome.  Please let me know of any issues you may find in the bug tracker on github. You can find it [here. ](https://github.com/ryanstreet/magento2-vagrant/issues)
