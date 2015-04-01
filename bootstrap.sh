@@ -72,7 +72,7 @@ echo "############################"
 echo "##### INSTALLING MYSQL #####"
 echo "############################"
 export DEBIAN_FRONTEND=noninteractive
-apt-get -q -y install mysql-server-5.6 mysql-client-5.6
+sudo apt-get -q -y install mysql-server-5.6 mysql-client-5.6
 
 # Create Database instance
 echo "#############################"
