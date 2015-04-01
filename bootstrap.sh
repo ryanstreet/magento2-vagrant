@@ -60,6 +60,13 @@ echo "##### Enabling Magento2 Site #####"
 echo "##################################"
 sudo a2ensite magento2.conf
 
+# Setting Locales
+echo "###########################"
+echo "##### Setting Locales #####"
+echo "###########################"
+sudo locale-gen en_US en_US.UTF-8 pl_PL pl_PL.UTF-8
+sudo dpkg-reconfigure locales
+
 # Install MySQL 5.6
 echo "############################"
 echo "##### INSTALLING MYSQL #####"
