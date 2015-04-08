@@ -8,13 +8,13 @@
 echo "########################"
 echo "##### UPDATING APT #####"
 echo "########################"
-sudo apt-get update
+apt-get update
 
 # Install Apache
 echo "#############################"
 echo "##### INSTALLING APACHE #####"
 echo "#############################"
-sudo apt-get -y install apache2
+apt-get -y install apache2
 
 # Creating folder
 echo "####################################"
@@ -27,7 +27,7 @@ chmod 0777 -R /var/www/html/magento2
 echo "#######################################"
 echo "##### ENABLING APACHE MOD-REWRITE #####"
 echo "#######################################"
-sudo a2enmod rewrite
+a2enmod rewrite
 
 # append AllowOverride to Apache Config File
 echo "#######################################"
@@ -58,21 +58,21 @@ echo "ServerName localhost" >> /etc/apache2/apache2.conf
 echo "##################################"
 echo "##### Enabling Magento2 Site #####"
 echo "##################################"
-sudo a2ensite magento2.conf
+a2ensite magento2.conf
 
 # Setting Locales
 echo "###########################"
 echo "##### Setting Locales #####"
 echo "###########################"
-sudo locale-gen en_US en_US.UTF-8 pl_PL pl_PL.UTF-8
-sudo dpkg-reconfigure locales
+locale-gen en_US en_US.UTF-8 pl_PL pl_PL.UTF-8
+dpkg-reconfigure locales
 
 # Install MySQL 5.6
 echo "############################"
 echo "##### INSTALLING MYSQL #####"
 echo "############################"
 export DEBIAN_FRONTEND=noninteractive
-sudo apt-get -q -y install mysql-server-5.6 mysql-client-5.6
+apt-get -q -y install mysql-server-5.6 mysql-client-5.6
 
 # Create Database instance
 echo "#############################"
@@ -96,15 +96,33 @@ apt-get -y install php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd 
 echo "#############################"
 echo "##### PHP MYCRYPT PATCH #####"
 echo "#############################"
-sudo ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/apache2/conf.d/20-mcrypt.ini
-sudo ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/20-mcrypt.ini
-sudo service apache2 restart
+php5enmod mcrypt
+service apache2 restart
 
 # Set PHP Timezone
 echo "########################"
 echo "##### PHP TIMEZONE #####"
 echo "########################"
 echo "date.timezone = America/New_York" >> /etc/php5/cli/php.ini
+
+# Set Pecl php_ini location
+echo "##########################"
+echo "##### CONFIGURE PECL #####"
+echo "##########################"
+pear config-set php_ini /etc/php5/apache2/php.ini
+
+# Install Xdebug
+echo "##########################"
+echo "##### INSTALL XDEBUG #####"
+echo "##########################"
+pecl install xdebug
+
+# Install Pecl Config variables
+echo "############################"
+echo "##### CONFIGURE XDEBUG #####"
+echo "############################"
+echo "xdebug.remote_enable = 1" >> /etc/php5/apache2/php.ini
+echo "xdebug.remote_connect_back = 1" >> /etc/php5/apache2/php.ini
 
 # Install Git
 echo "##########################"
@@ -137,16 +155,34 @@ find /var/www/html/magento2/ -type f -exec chmod 600 {} \;
 echo "############################################"
 echo "##### INSTALLING COMPOSER DEPENDENDIES #####"
 echo "############################################"
-cd /var/www/html/magento2/
-composer install
+if [ -z "$1" ]
+	then
+		echo "################################################################"
+		echo "##### NO GITHUB API TOKEN.  SKIPPING COMPOSER INSTALLATION #####"
+		echo "################################################################"
+	else
+		composer config -g github-oauth.github.com $1
+		cd /var/www/html/magento2/
+		composer install
+fi
 
 # Restart apache
 echo "#############################"
 echo "##### RESTARTING APACHE #####"
 echo "#############################"
-sudo service apache2 restart
+service apache2 restart
 
 # Post Up Message
 echo "Magento2 Vagrant Box ready!"
+if [ -z "$1" ]
+	then
+		echo "Final installation instructions:"
+		echo "run 'vagrant ssh'"
+		echo "run 'cd /var/www/html/magento2/'"
+		echo "run 'composer install'"
+		echo "When prompted, enter your github API credentials"
+		echo "Afterward finish installation."
+fi
 echo "Go to http://192.168.33.10/magento2/setup/ to finish installation."
 echo "If you configured your hosts file, go to http://www.magento2.dev/setup/"
+

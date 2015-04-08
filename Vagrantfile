@@ -3,6 +3,12 @@
 
 VAGRANTFILE_API_VERSION = "2"
 
+  # Enter Your Github API Token Below. 
+  # If not entered, you must manually run composer to finish the installation.
+  # See http://devdocs.magento.com/guides/v1.0/install-gde/trouble/tshoot_rate-limit.html
+  
+  githubToken = ""
+  
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -35,7 +41,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # config.vm.synced_folder ".", "/vagrant", type: "smb"
   
   ## Bootstrap script to provision box.  All installation methods can go here. 
-  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision "shell" do |s|
+    s.path = "bootstrap.sh"
+    s.args   = [githubToken]
+  end
   
   # If you need to forward ports, you can use this command:
   # config.vm.network "forwarded_port", guest: 80, host: 8080
