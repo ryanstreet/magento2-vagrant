@@ -41,6 +41,14 @@ After Vagrant and Virtualbox are setup, run the following commands to install th
 **Navigate to the folder**
 
     cd /path/to/magento2-vagrant/
+
+**(Optional) Add Github Personal Access Token**
+
+Read [this](http://devdocs.magento.com/guides/v1.0/install-gde/trouble/tshoot_rate-limit.html) guide to get a personal access token.  Once you have created the token, open up the `Vagrantfile` and place the token here:
+
+    githubToken = ""
+_Note: If you did not enter a personal access token, Composer will not run automatically.  You will have to run it yourself to finish installation._
+
 **Run Vagrant Command**
 
     vagrant up
