@@ -90,7 +90,7 @@ apt-get -y install php5
 echo "#####################################"
 echo "##### INSTALLING PHP EXTENSIONS #####"
 echo "#####################################"
-apt-get -y install php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd php5-intl php5-common php-pear php5-dev
+apt-get -y install php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd php5-intl php5-common php-pear php5-dev php5-xsl
 
 # Mcrypt issue
 echo "#############################"
