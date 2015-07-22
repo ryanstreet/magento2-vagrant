@@ -17,17 +17,16 @@ echo "#############################"
 apt-get -y install apache2
 
 # Creating folder
-echo "####################################"
-echo "##### CREATING MAGENTO2 FOLDER #####"
-echo "####################################"
-mkdir /var/www/html/magento2
-chmod 0777 -R /var/www/html/magento2
+echo "#######################################"
+echo "##### MAGENTO2 FOLDER PERMISSIONS #####"
+echo "#######################################"
+chmod 0777 -R /var/www/html/magento
 
 # enable modrewrite
 echo "#######################################"
 echo "##### ENABLING APACHE MOD-REWRITE #####"
 echo "#######################################"
-a2enmod rewrite
+a2enmod rewrite 
 
 # append AllowOverride to Apache Config File
 echo "#######################################"
@@ -46,9 +45,6 @@ echo "
 			Order allow,deny
 			allow from all
 		</Directory>
-
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 " > /etc/apache2/sites-available/magento2.conf
 
@@ -130,12 +126,6 @@ echo "##### INSTALLING GIT #####"
 echo "##########################"
 apt-get -y install git
 
-# Clone Magento2 Repository
-echo "#####################################"
-echo "##### CLONING MAGENTO2 FROM GIT #####"
-echo "#####################################"
-git clone https://github.com/magento/magento2.git /var/www/html/magento2/
-
 # Composer Installation
 echo "###############################"
 echo "##### INSTALLING COMPOSER #####"
@@ -155,16 +145,18 @@ find /var/www/html/magento2/ -type f -exec chmod 600 {} \;
 echo "############################################"
 echo "##### INSTALLING COMPOSER DEPENDENDIES #####"
 echo "############################################"
-if [ -z "$1" ]
-	then
-		echo "################################################################"
-		echo "##### NO GITHUB API TOKEN.  SKIPPING COMPOSER INSTALLATION #####"
-		echo "################################################################"
-	else
-		composer config -g github-oauth.github.com $1
-		cd /var/www/html/magento2/
-		composer install
-fi
+# if [ -z "$1" ]
+# 	then
+# 		echo "################################################################"
+# 		echo "##### NO GITHUB API TOKEN.  SKIPPING COMPOSER INSTALLATION #####"
+#		echo "################################################################"
+#	else
+#		composer config -g github-oauth.github.com $1
+#		cd /var/www/html/magento2/
+#		composer install
+#fi
+cd /var/www/html/magento2/
+composer install
 
 # Restart apache
 echo "#############################"

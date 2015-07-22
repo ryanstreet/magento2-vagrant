@@ -19,8 +19,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # box modifications, including memory limits and box name. 
   config.vm.provider "virtualbox" do |vb|
-     vb.customize ["modifyvm", :id, "--memory", "2048"]
-	 vb.name = "Magento2 Vagrant"
+     vb.name = "Magento2 Vagrant"
+     vb.memory = 4096
+	 vb.cpus = 2
   end
 
   ## IP to access box
@@ -39,6 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # SMB Share, good for Windows:
   # (If experiencing issues, upgrade PowerShell to V 3.0)
   # config.vm.synced_folder ".", "/vagrant", type: "smb"
+  
+  config.vm.synced_folder "./magento2", "/var/www/html/magento2/"
   
   ## Bootstrap script to provision box.  All installation methods can go here. 
   config.vm.provision "shell" do |s|
