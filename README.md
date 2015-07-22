@@ -1,5 +1,8 @@
 # Vagrant for Magento2
 
+## Update
+
+**Magento 2 codebase now lives in folder.  You must run an additional command to install Magento 2!**
 
 Vagrant Setup for Magento 2 install.  All prerequisites setup and running. 
 
@@ -41,6 +44,11 @@ After Vagrant and Virtualbox are setup, run the following commands to install th
 **Navigate to the folder**
 
     cd /path/to/magento2-vagrant/
+
+**Install Magento 2 Repo**
+
+    git submodule update
+    
 
 **(Optional) Add Github Personal Access Token**
 
