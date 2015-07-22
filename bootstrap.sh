@@ -145,18 +145,18 @@ find /var/www/html/magento2/ -type f -exec chmod 600 {} \;
 echo "############################################"
 echo "##### INSTALLING COMPOSER DEPENDENDIES #####"
 echo "############################################"
-# if [ -z "$1" ]
-# 	then
-# 		echo "################################################################"
-# 		echo "##### NO GITHUB API TOKEN.  SKIPPING COMPOSER INSTALLATION #####"
-#		echo "################################################################"
-#	else
-#		composer config -g github-oauth.github.com $1
-#		cd /var/www/html/magento2/
-#		composer install
-#fi
-cd /var/www/html/magento2/
-composer install
+ if [ -z "$1" ]
+ 	then
+ 		echo "################################################################"
+ 		echo "##### NO GITHUB API TOKEN.  SKIPPING COMPOSER INSTALLATION #####"
+		echo "################################################################"
+	else
+		composer config -g github-oauth.github.com $1
+		cd /var/www/html/magento2/
+		composer config repositories.magento composer http://packages.magento.com
+		composer require magento/sample-data:1.0.0-beta
+fi
+
 
 # Restart apache
 echo "#############################"
