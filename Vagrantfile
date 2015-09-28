@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # (If experiencing issues, upgrade PowerShell to V 3.0)
   # config.vm.synced_folder ".", "/vagrant", type: "smb"
   
-  config.vm.synced_folder "./magento2", "/var/www/html/magento2/"
+  config.vm.synced_folder "./magento2", "/var/www/html/magento2/", :mount_options => ["dmode=777", "fmode=777"]
   
   ## Bootstrap script to provision box.  All installation methods can go here. 
   config.vm.provision "shell" do |s|
