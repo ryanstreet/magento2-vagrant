@@ -47,6 +47,7 @@ After Vagrant and Virtualbox are setup, run the following commands to install th
 
 **Install Magento 2 Repo**
 
+    git submodule init
     git submodule update
     
 
