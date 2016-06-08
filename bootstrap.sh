@@ -76,36 +76,58 @@ echo "##### CREATING DATABASE #####"
 echo "#############################"
 mysql -u root -e "create database magento;"
 
-# Install PHP 5.5
+# Install PHP 7.0
 echo "##########################"
-echo "##### INSTALLING PHP #####"
+echo "#### INSTALLING PHP 7.0 ##"
 echo "##########################"
-apt-get -y install php5
 
-# Install Required PHP extensions
-echo "#####################################"
-echo "##### INSTALLING PHP EXTENSIONS #####"
-echo "#####################################"
-apt-get -y install php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd php5-intl php5-common php-pear php5-dev php5-xsl
+apt-get -q -y  install python-software-properties
+add-apt-repository ppa:ondrej/php
+apt-get -q -y  update
+apt-get -q -y  purge php5-fpm
+apt-get -q -y  install php7.0-cli php7.0-common libapache2-mod-php7.0 php7.0 php7.0-mysql php7.0-fpm php7.0-curl php7.0-gd php7.0-mysql php7.0-bz2 php7.0-dev
 
-# Mcrypt issue
-echo "#############################"
-echo "##### PHP MYCRYPT PATCH #####"
-echo "#############################"
-php5enmod mcrypt
-service apache2 restart
+echo "################################"
+echo "#INSTALLING phpMyAdmin 4.5.3.1 #"
+echo "################################"
+
+wget https://files.phpmyadmin.net/phpMyAdmin/4.5.3.1/phpMyAdmin-4.5.3.1-all-languages.zip -P /var/www/html/
+apt-get -q -y  install unzip
+unzip /var/www/html/phpMyAdmin-4.5.3.1-all-languages.zip -d /var/www/html/
+mv /var/www/html/phpMyAdmin-4.5.3.1-all-languages/ /var/www/html/phpmyadmin/
+
+echo "################################"
+echo "#### CONFIGURING phpMyAdmin ####"
+echo "################################"
+cp /var/www/html/phpmyadmin/config.sample.inc.php /var/www/html/phpmyadmin/config.inc.php
+sed -i "s/\['AllowNoPassword'\] = false;/\['AllowNoPassword'\] = true;/g" /var/www/html/phpmyadmin/config.inc.php
+/etc/init.d/apache2 restart
+
+# PHP extensions
+echo "########################"
+echo "##### PHP EXTENSIONS ###"
+echo "########################"
+apt-get -q -y  install php-xml
+apt-get -q -y  install php-mcrypt
+apt-get -q -y  install php-intl
+apt-get -q -y  install php-mbstring
+apt-get -q -y  install php-zip
+apt-get -q -y  install php-pear
+apt-get -q -y  install libcurl3-openssl-dev
+pecl install pecl_http
+/etc/init.d/apache2 restart
 
 # Set PHP Timezone
 echo "########################"
 echo "##### PHP TIMEZONE #####"
 echo "########################"
-echo "date.timezone = America/New_York" >> /etc/php5/cli/php.ini
+echo "date.timezone = America/New_York" >> /etc/php/7.0/cli/php.ini
 
 # Set Pecl php_ini location
 echo "##########################"
 echo "##### CONFIGURE PECL #####"
 echo "##########################"
-pear config-set php_ini /etc/php5/apache2/php.ini
+pear config-set php_ini /etc/php/7.0/apache2/php.ini
 
 # Install Xdebug
 echo "##########################"
@@ -117,8 +139,8 @@ pecl install xdebug
 echo "############################"
 echo "##### CONFIGURE XDEBUG #####"
 echo "############################"
-echo "xdebug.remote_enable = 1" >> /etc/php5/apache2/php.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php5/apache2/php.ini
+echo "xdebug.remote_enable = 1" >> /etc/php/7.0/apache2/php.ini
+echo "xdebug.remote_connect_back = 1" >> /etc/php/7.0/apache2/php.ini
 
 # Install Git
 echo "##########################"

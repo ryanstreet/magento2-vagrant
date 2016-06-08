@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # box modifications, including memory limits and box name. 
   config.vm.provider "virtualbox" do |vb|
-     vb.name = "Magento2 Vagrant"
+     vb.name = "Magento 2 Vagrant with PHP7 & phpMyAdmin"
      vb.memory = 4096
 	 vb.cpus = 2
   end

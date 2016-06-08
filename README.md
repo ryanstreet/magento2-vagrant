@@ -50,6 +50,7 @@ After Vagrant and Virtualbox are setup, run the following commands to install th
     git submodule init
     git submodule update
     
+This operation can be quite long, especially the last moments. Do not quit until done unless the Magento 2 repository won't be completely configured.
 
 **(Optional) Add Github Personal Access Token**
 
@@ -62,10 +63,26 @@ _Note: If you did not enter a personal access token, Composer will not run autom
 
     vagrant up
 
+
+The configuration process will take a while, especially if it is the first time you use a vagrant box with this virtual machine, because this one had to be completely downloaded at the first utilization.
+
+Once completed, you can connect via SSH to you virtual machine, with putty for example. The adress and the port are usually
+127.0.0.1 and 2222 respectively, but it can change if you have many VMs running at the same time.
+
+** Download Magento 2**
+Once your VM is running, connect to it via SSH and go to the /var/www/html/magento2 directory. There run the command
+
+    composer install
+   
+This will download all the components of the vendor folder of Magento 2. These components are required to use this application. It will take a while, and after that, you installation will be completed, and you will be able to acces to your magento 2 installation via your browser.
+
 **Other Info**
 
     Database Username: root
     Database Password: (none)
+    SSH Login : vagrant
+    SSH Password : vagrant
+    root user password: vagrant
     Database Name: magento
     URL of Instance: http://192.168.33.10/magento2/
     Host File Configuration: 192.168.33.10 www.magento2.dev magento2.dev
