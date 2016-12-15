@@ -66,7 +66,7 @@ _Note: If you did not enter a personal access token, Composer will not run autom
 
 The configuration process will take a while, especially if it is the first time you use a vagrant box with this virtual machine, because this one had to be completely downloaded at the first utilization.
 
-Once completed, you can connect via SSH to you virtual machine, with putty for example. The adress and the port are usually
+Once completed, you can connect via SSH to your virtual machine, with putty for example. The address and the port are usually
 127.0.0.1 and 2222 respectively, but it can change if you have many VMs running at the same time.
 
 ** Download Magento 2**
