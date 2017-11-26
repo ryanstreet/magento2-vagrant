@@ -112,7 +112,7 @@ apt-get -q -y  install php7.0-mcrypt
 apt-get -q -y  install php7.0-intl
 apt-get -q -y  install php7.0-mbstring
 apt-get -q -y  install php7.0-zip
-apt-get -q -y  install php7.0-pear
+apt-get -q -y  install php-pear
 apt-get -q -y  install libcurl3-openssl-dev
 pecl install pecl_http
 /etc/init.d/apache2 restart
