@@ -107,11 +107,11 @@ sed -i "s/\['AllowNoPassword'\] = false;/\['AllowNoPassword'\] = true;/g" /var/w
 echo "########################"
 echo "##### PHP EXTENSIONS ###"
 echo "########################"
-apt-get -q -y  install php-xml
-apt-get -q -y  install php-mcrypt
-apt-get -q -y  install php-intl
-apt-get -q -y  install php-mbstring
-apt-get -q -y  install php-zip
+apt-get -q -y  install php7.0-xml
+apt-get -q -y  install php7.0-mcrypt
+apt-get -q -y  install php7.0-intl
+apt-get -q -y  install php7.0-mbstring
+apt-get -q -y  install php7.0-zip
 apt-get -q -y  install php-pear
 apt-get -q -y  install libcurl3-openssl-dev
 pecl install pecl_http
